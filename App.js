@@ -5,7 +5,7 @@ import { MyStack, MyTabs} from './navigation'
 
 const App = () => {
   return (
-      <MyTabs />
+      <MyStack />
   )
 }
 
