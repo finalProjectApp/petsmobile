@@ -1,11 +1,11 @@
 import React from 'react';
-import { MyStack, MyTabs} from './navigation'
+import { Auth, MyTabs} from './navigation'
 
 
 
 const App = () => {
   return (
-      <MyStack />
+      <MyTabs />
   )
 }
 
