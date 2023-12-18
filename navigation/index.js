@@ -1,7 +1,9 @@
 import React from "react";
+import { View, Text, Platform } from "react-native";
 import { Image, TouchableOpacity, Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {createStackNavigator} from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Entypo from 'react-native-vector-icons/Entypo';
 
@@ -18,10 +20,22 @@ import WelcomeScreen from "../screens/authScreens/welcome";
 import PetsScreen from "../screens/dashboardScreens/pets";
 import ProfileScreen from "../screens/dashboardScreens/profile";
 
+//Pets Stack
+import PetsDetailsScreen from "../screens/dashboardScreens/pets/PetDetails";
 
 const AuthStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+
+const PetsStackNavigator = createStackNavigator();
+export const PetsStack = () => {
+    return (
+        <PetsStackNavigator.Navigator>
+            <PetsStackNavigator.Screen name="PetsScreen" component={PetsScreen} />
+            <PetsStackNavigator.Screen name="PetDetailsScreen" component={PetsDetailsScreen} />
+        </PetsStackNavigator.Navigator>
+    )
+}
 export const Auth = () => {
     return (
         <NavigationContainer>
@@ -36,38 +50,44 @@ export const Auth = () => {
     );
   }
 
-
+const screenOptions = {
+  tabBarShowLabel: false,
+  tabBarActiveTintColor: 'green',
+  tabBarInactiveTintColor: 'blue',
+  tabBarStyle: {
+    position: 'absolute',
+    bottom: Platform.OS === "ios" ? -10: 0, 
+    left: 0, right: 0,
+    elevation: 0,
+    height: Platform.OS === "ios" ? 80 : 60,
+    backgroundColor: '#fff',
+  },
+}
 
 
 export const MyTabs = () => {
   return (
     <NavigationContainer >
-        <Tab.Navigator screenOptions={{
-            tabBarActiveTintColor: 'green',
-            tabBarInactiveTintColor: 'blue',
-            tabBarStyle: {
-              position: 'absolute',
-
-              padding: 10,
-              borderTopStartRadius: 50,
-              borderTopEndRadius: 50,
-              backgroundColor: '#ccc',
-              alignContent: 'center',
-              justifyContent: 'center'
-            },
-        }}>
-            <Tab.Screen name="Pets" component={PetsScreen} 
+        <Tab.Navigator screenOptions={screenOptions}>
+            <Tab.Screen name="Pets" component={PetsStack} 
               options={{
                 headerShown:false,
-                tabBarLabel: "pets",
-                tabBarIcon: ({color}) => (
-                  <Entypo color={color} name="baidu" size={28}/>)}}
+                tabBarIcon: ({focused}) => (
+                  <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <Entypo color={focused ? '#16247d' : '#111'} name="baidu" size={24}/>
+                    <Text style={{fontSize: 12, color: '#16247d'}}>PETS</Text>
+                  </View>
+                )
+                }}
             />
             <Tab.Screen name="Profile" component={ProfileScreen} 
               options={{
-                tabBarLabel: "profile", 
-                tabBarIcon: ({color}) => (
-                  <Entypo color={color} name="user" size={28} />),
+                tabBarIcon: ({focused}) => (
+                  <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Entypo color={focused ? '#16247d' : '#111'} name="user" size={28} />
+                    <Text style={{color: '#16247d', fontSize: 12}}>PROFILE</Text>
+                  </View>
+                  ),
                 headerStyle:{backgroundColor:null},
                 headerShadowVisible: false,
                 headerLeft:() => (<TouchableOpacity onPress={()=>Alert.alert('Menu Button Pressed')}><Entypo name="menu" size={40} color={'#c6c'}/></TouchableOpacity>),
@@ -77,3 +97,5 @@ export const MyTabs = () => {
     </NavigationContainer>
   );
 }
+
+

@@ -1,6 +1,9 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./style";
 import { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginAccount } from '../../../api/authApi.js'
+import { Auth, MyTabs} from '../../../navigation'
 
 import Header from "../../../components/header";
 import Button from "../../../components/button";
@@ -10,22 +13,37 @@ import { Google, Facebook, Apple } from "../../../components/socials.js";
 
 const LoginScreen = ({navigation}) => {
 
-    const { email, setEmail } = useState('');
-    const { password, setPassword } = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+
+    const handleSubmit = async () => {
+        try {
+            console.log("handleSubmit: " + email +", " + password)
+            const login = await loginAccount(email, password);
+            console.log("login status = " + login.status)
+
+        if (login.status === true) {
+            await AsyncStorage.setItem('authToken', login.token);
+            console.log("login token = " + login.token)
+        }
+        } catch (error) {
+            console.error("Error during login:", error);
+        }
+      };
 
     return(
         <View style={styles.container}>
             <Header onPress={() => navigation.goBack()} text="Login To Your Account" iconName="arrow-left"/>
             <View style={styles.inputs}>
-                <TextInput placeholder="Email" style={styles.fields}/>
-                <TextInput placeholder="Password" style={styles.fields}/>
+                <TextInput placeholder="Email" style={styles.fields} value={email} onChangeText={(text) => setEmail(text)}/>
+                <TextInput placeholder="Password" style={styles.fields} value={password} onChangeText={(text) => setPassword(text)}/>
 
                 <TouchableOpacity style={{marginTop:10, marginBottom:10}} onPress={() => navigation.navigate('Forgot')}>
                 <Text style={{padding:5}}>
                     Forgot password? 
                 </Text>
-                </TouchableOpacity>
-                <Button text="Login"/>
+                </TouchableOpacity >
+                <Button text="Login" onPress={handleSubmit}/>
             </View>
 
             <Text style={{alignSelf: 'center'}}>- Or sign in with -</Text>
