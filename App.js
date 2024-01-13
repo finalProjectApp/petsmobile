@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from "@react-navigation/native";
 import { Auth, MyTabs} from './navigation'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -18,9 +19,13 @@ const App = () => {
     checkForExistingToken();
   }, []);
   return (
-    <>
-      {tokenExist ? <MyTabs /> : <Auth />}
+    <NavigationContainer>
+      <Auth />
+      <>
+      {/* {tokenExist ? <MyTabs /> : <Auth />} */}
     </>
+    </NavigationContainer>
+    
   )
 }
 

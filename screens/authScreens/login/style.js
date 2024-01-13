@@ -3,11 +3,25 @@ import { StyleSheet } from "react-native"
 export default StyleSheet.create({
     container:{
         flex: 1,
+        backgroundColor: '#7B9FCF'
+    },
+    top:{
+        flex: 4,
+        backgroundColor: '#fff',
+        borderBottomRightRadius: 50,
+        paddingTop: 60
+    },
+    img:{
+        flex: 1,
+        height: "100%",
+        width: "100%"
     },
     inputs:{
-        flex: 2,
+        flex: 6,
         justifyContent: 'center',
-        paddingHorizontal: 40
+        paddingHorizontal: 40,
+        backgroundColor: '#7B9FCF',
+        borderTopLeftRadius: 50
     },
     fields: {
         width: '100%',

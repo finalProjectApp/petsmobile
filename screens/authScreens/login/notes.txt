@@ -1,4 +1,8 @@
-import { View, Text, TextInput, TouchableOpacity, Alert, Image, SafeAreaView } from "react-native";
+/*
+    First try Login Page
+*/
+
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./style";
 import { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,7 +10,8 @@ import { loginAccount } from '../../../api/authApi.js'
 
 import { useNavigation } from '@react-navigation/native';
 
-import { LoginButton } from "../../../components/button.js";
+import Header from "../../../components/header";
+import Button from "../../../components/button";
 
 import { Google, Facebook, Apple } from "../../../components/socials.js";
 
@@ -35,12 +40,8 @@ const LoginScreen = () => {
       };
 
     return(
-            <View style={styles.container}>
-            <View style={styles.top}>
-            <Text style={{fontSize:20, fontWeight:'bold'}}> Hello Pet Lovers</Text>
-                <Image source={require('../../../assets/pngpets.png')} resizeMode="contain" style={styles.img}/>
-                
-            </View>
+        <View style={styles.container}>
+            <Header onPress={() => navigation.goBack()} text="Login To Your Account" iconName="arrow-left"/>
             <View style={styles.inputs}>
                 <TextInput placeholder="Email" style={styles.fields} value={email} onChangeText={(text) => setEmail(text)}/>
                 <TextInput placeholder="Password" style={styles.fields} value={password} onChangeText={(text) => setPassword(text)}/>
@@ -50,17 +51,20 @@ const LoginScreen = () => {
                     Forgot password? 
                 </Text>
                 </TouchableOpacity >
-                <LoginButton text="Login" onPress={handleSubmit}/>
-                <Text style={{alignSelf: 'center'}}>- Or sign in with -</Text>
+                <Button text="Login" onPress={handleSubmit}/>
+            </View>
+
+            <Text style={{alignSelf: 'center'}}>- Or sign in with -</Text>
 
             <View style={styles.socials}>
                 <Google onPress={() => Alert.alert("Google cliked")}/>
                 <Facebook onPress={() => Alert.alert("FAcebook cliked")}/>
                 <Apple onPress={() => Alert.alert("Apple cliked")}/>
             </View>
-            </View>
+            <Text>
 
-        </View>     
+            </Text>
+        </View>
     )
 }
 

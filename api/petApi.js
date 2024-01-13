@@ -2,7 +2,7 @@ import connect from '../connect/connect';
 
 export const createPet = async (token, pet) => {
     try {
-        const response = await fetch(connect.baseUrl, {
+        const response = await fetch(connect.petUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const createPet = async (token, pet) => {
 
 export const getMyPets = async (token) => {
     console.log("getMyPets token = " + token)
-    const response = await fetch(connect.baseUrl, {
+    const response = await fetch(connect.petUrl, {
         method:'Get',
         headers:{
             'Content-Type':'application/json',
@@ -48,7 +48,7 @@ export const getPetById = async (token, petId) => {
     console.log("getPetById petId = " + petId);
     console.log("getPetById token = " + token);
 
-    const response = await fetch(`${connect.baseUrl}/pets/${petId}`, {
+    const response = await fetch(`${connect.petUrl}/getPetById/${petId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -59,6 +59,7 @@ export const getPetById = async (token, petId) => {
 
     try {
         const pet = await response.json();
+        console.log('Raw API Response:', pet);
         return pet;
     } catch (error) {
         console.error("Error parsing JSON:", error);
@@ -71,7 +72,7 @@ export const updatePetById = async (token, petId, updatedPetData) => {
         console.log("updatePetById petId = " + petId);
         console.log("updatePetById token = " + token);
 
-        const response = await fetch(`${connect.baseUrl}/pets/${petId}`, {
+        const response = await fetch(`${connect.petUrl}/${petId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +102,7 @@ export const deletePetById = async (token, petId) => {
         console.log("deletePetById petId = " + petId);
         console.log("deletePetById token = " + token);
 
-        const response = await fetch(`${connect.baseUrl}/pets/${petId}`, {
+        const response = await fetch(`${connect.petUrl}/${petId}`, {
             method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json',

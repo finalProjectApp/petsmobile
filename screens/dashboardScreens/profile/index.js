@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-
+import { Exit } from "../../../components/icons";
 
 const ProfileScreen = () => {
     return(
@@ -7,6 +7,7 @@ const ProfileScreen = () => {
             <Text>
                 Dashboard stack Profile Screen
             </Text>
+            <Exit />
         </View>
     )
 }

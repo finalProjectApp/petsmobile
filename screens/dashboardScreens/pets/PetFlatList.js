@@ -9,6 +9,9 @@ const PetFlatList = ({ pet, clickMe }) => {
   return (
     <TouchableOpacity style={styles.petCard} onPress={clickMe}>
       <View>
+      <Text style={styles.cardtxt}>
+          petId: {pet._id}
+        </Text>
         <Text style={styles.cardtxt}>
           nickname: {pet.name}
         </Text>
